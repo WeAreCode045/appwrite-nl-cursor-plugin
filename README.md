@@ -31,7 +31,16 @@ Kopieer `.env.example` uit deze plugin als sjabloon — commit geen echte keys.
 
 ## Installatie in Cursor
 
-Dit is een **lokale marketplace**: één map bevat zowel `marketplace.json` als de plugin (`source: "./"`). Je selecteert die map als marketplace-root — geen aparte submap.
+**Aanbevolen (GitHub):** voorkomt de `file://`-bug in Cursor 3.30.x.
+
+1. **Cursor Settings → Plugins → Add marketplace** (of vergelijkbaar).
+2. URL: `https://github.com/WeAreCode045/appwrite-nl-cursor-plugin`
+3. Schakel plugin **appwrite-nl-cursor-plugin** in voor je workspace (bijv. Research Navigator).
+4. MCP-server **`appwrite-nl`** staat daarna in MCP; refresh indien nodig.
+
+### Lokale marketplace (optioneel)
+
+Één map bevat zowel `marketplace.json` als de plugin (`source: "./"`). Je selecteert die map als marketplace-root — geen aparte submap.
 
 ### Verplichte bestanden (marketplace-root)
 
