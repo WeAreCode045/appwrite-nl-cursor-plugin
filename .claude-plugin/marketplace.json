@@ -1,0 +1,18 @@
+{
+  "name": "code045-appwrite-nl",
+  "owner": {
+    "name": "Code045",
+    "email": "info@code045.nl"
+  },
+  "metadata": {
+    "description": "Trimmed Appwrite skills and MCP for appwrite.nl; workspace .env credentials.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "appwrite-nl-cursor-plugin",
+      "source": ".",
+      "description": "Appwrite MCP plus CLI and TypeScript skills for appwrite.nl (Code045 / Research Navigator)."
+    }
+  ]
+}

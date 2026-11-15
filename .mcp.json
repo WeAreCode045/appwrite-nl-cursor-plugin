@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "appwrite-nl": {
+      "command": "bash",
+      "args": [
+        "/Users/maurice/Code045/appwrite-nl-cursor-plugin/bin/appwrite-mcp.sh",
+        "${workspaceFolder}"
+      ]
+    }
+  }
+}
