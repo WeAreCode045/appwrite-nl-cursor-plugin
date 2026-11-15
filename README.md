@@ -55,10 +55,25 @@ Dit is een **lokale marketplace**: één map bevat zowel `marketplace.json` als 
 3. Selecteer exact: **`/Users/maurice/Code045/appwrite-nl-cursor-plugin`** (de repo-root, niet `skills/` of `.cursor-plugin/`).
 4. Na installatie: enable plugin **appwrite-nl-cursor-plugin** in de pluginlijst.
 5. Open je project-workspace (bijv. Research Navigator). Refresh MCP indien nodig; server **`appwrite-nl`** komt uit plugin-`.mcp.json`.
-6. Controleer in `.mcp.json` het pad naar `bin/appwrite-mcp.sh` (nu absoluut pad naar deze clone).
-7. Workspace **`.mcp.json`** / **`.cursor/mcp.json`** blijft voor andere servers (bijv. Deepgram).
+6. Workspace **`.mcp.json`** / **`.cursor/mcp.json`** blijft voor andere servers (bijv. Deepgram).
 
-**Fout “Failed to resolve git ref HEAD”?** Eerst controleren: `git -C /Users/maurice/Code045/appwrite-nl-cursor-plugin rev-parse HEAD` moet een commit-hash geven. Daarna in Cursor: **Uninstall** op de plugin → opnieuw **Add local plugin** met dezelfde map → eventueel Cursor herstarten.
+**Fout “Failed to install” / “Failed to resolve git ref HEAD” (Cursor 3.30.x):** de Agent-host zet `file:///Users/maurice/...` soms om naar een ongeldige SSH-URL `git@:Users/maurice.git` bij `git ls-remote … HEAD`. De manifests wijzen met `repository: file:///Users/maurice/Code045/appwrite-nl-cursor-plugin`; zet lokaal ook een `origin`-remote:
+
+```sh
+git -C /Users/maurice/Code045/appwrite-nl-cursor-plugin remote add origin \
+  file:///Users/maurice/Code045/appwrite-nl-cursor-plugin 2>/dev/null || \
+git -C /Users/maurice/Code045/appwrite-nl-cursor-plugin remote set-url origin \
+  file:///Users/maurice/Code045/appwrite-nl-cursor-plugin
+```
+
+Daarna: marketplace **Uninstall** → opnieuw **Add local plugin** → plugin inschakelen → **Developer: Reload Window**. Als de toast nog faalt maar de marketplace wel verschijnt, na reload opnieuw inschakelen (backend cacheert dan op commit-hash, niet op `HEAD`).
+
+**Schone herinstallatie (optioneel):**
+
+```sh
+rm -rf ~/.cursor/plugins/cache/code045-appwrite-nl
+rm -rf ~/.cursor/plugins/marketplaces/_/users/maurice/46889aa*
+```
 
 ### Vereisten
 
