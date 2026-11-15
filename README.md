@@ -58,6 +58,8 @@ Dit is een **lokale marketplace**: één map bevat zowel `marketplace.json` als 
 6. Controleer in `.mcp.json` het pad naar `bin/appwrite-mcp.sh` (nu absoluut pad naar deze clone).
 7. Workspace **`.mcp.json`** / **`.cursor/mcp.json`** blijft voor andere servers (bijv. Deepgram).
 
+**Fout “Failed to resolve git ref HEAD”?** Eerst controleren: `git -C /Users/maurice/Code045/appwrite-nl-cursor-plugin rev-parse HEAD` moet een commit-hash geven. Daarna in Cursor: **Uninstall** op de plugin → opnieuw **Add local plugin** met dezelfde map → eventueel Cursor herstarten.
+
 ### Vereisten
 
 - `uv` / `uvx` voor `mcp-server-appwrite`
