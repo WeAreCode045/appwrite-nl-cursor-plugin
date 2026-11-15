@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "appwrite-nl": {
+      "command": "bash",
+      "args": [
+        "bin/appwrite-mcp.sh",
+        "${workspaceFolder}"
+      ]
+    }
+  }
+}
