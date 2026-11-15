@@ -1,6 +1,6 @@
 {
   "name": "appwrite-nl-cursor-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Trimmed Appwrite plugin for appwrite.nl: MCP + CLI/TypeScript skills. Project ID and API key from the open workspace .env.local / .env, never hardcoded.",
   "author": {
     "name": "Code045",

@@ -64,7 +64,7 @@ try_env_file() {
   endpoint=$(read_endpoint "$f")
   echo "appwrite-mcp: project '$pid' on $endpoint (from $f)" >&2
   export APPWRITE_ENDPOINT="$endpoint" APPWRITE_PROJECT_ID="$pid" APPWRITE_API_KEY="$key"
-  exec uvx mcp-server-appwrite
+  return 0
 }
 
 collect_env_candidates() {
@@ -85,10 +85,20 @@ collect_env_candidates() {
   printf '%s\n' "${out[@]}"
 }
 
+env_geladen=0
 while IFS= read -r f; do
   [ -n "$f" ] || continue
-  try_env_file "$f" && exit 0
+  if try_env_file "$f"; then
+    env_geladen=1
+    break
+  fi
 done < <(collect_env_candidates "$start")
+
+if [ "$env_geladen" = 1 ]; then
+  # Exec once after candidate scanning — exec inside the loop left stdio in a state
+  # where mcp-server-appwrite's transport closed ~150ms after "ready" (Cursor -32000).
+  exec uvx mcp-server-appwrite
+fi
 
 echo "appwrite-mcp: no .env.local/.env with APPWRITE_API_KEY and a project id found from $start" >&2
 echo "appwrite-mcp: add APPWRITE_API_KEY and APPWRITE_PROJECT_ID (or VITE_APPWRITE_PROJECT_ID) to workspace .env.local" >&2
