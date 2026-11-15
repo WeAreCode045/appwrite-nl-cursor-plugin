@@ -7,14 +7,14 @@
   "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin",
   "metadata": {
     "description": "Trimmed Appwrite skills and MCP for appwrite.nl; workspace .env credentials.",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   "plugins": [
     {
       "name": "appwrite-nl-cursor-plugin",
       "source": ".",
       "description": "Appwrite MCP plus CLI and TypeScript skills for appwrite.nl (Code045 / Research Navigator).",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin"
     }
   ]

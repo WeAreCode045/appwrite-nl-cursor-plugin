@@ -3,7 +3,7 @@
     "appwrite-nl": {
       "command": "bash",
       "args": [
-        "bin/appwrite-mcp.sh",
+        "${CURSOR_PLUGIN_ROOT}/bin/appwrite-mcp.sh",
         "${workspaceFolder}"
       ]
     }
