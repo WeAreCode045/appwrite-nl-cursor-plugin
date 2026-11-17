@@ -499,21 +499,21 @@ await customers.createMany([
 
 For headless automation, see the [Non-Interactive Mode docs](https://appwrite.io/docs/tooling/command-line/non-interactive).
 
-### Deploy non-interactively
+### Deploy carefully (interactive by default)
+
+Do **not** use `--force` unless the user explicitly asks for it. `--force` skips CLI warnings (including destructive schema/data warnings). Especially dangerous: `appwrite push tables` with `--force` can apply column drops/changes and wipe or alter row data when `appwrite.config.json` is incomplete or out of date.
 
 ```bash
-# Push everything
-appwrite push all --all --force
+# Prefer targeted pushes; let the CLI show warnings and confirm
+appwrite push functions --function-id <FUNCTION_ID>
+appwrite push sites --site-id <SITE_ID>
+appwrite push tables
 
-# Push specific resources
-appwrite push functions --all --force
-appwrite push functions --function-id <FUNCTION_ID> --force
-appwrite push sites --all --force
-appwrite push tables --all --force
-appwrite push teams --all --force
-appwrite push buckets --all --force
-appwrite push topics --all --force
+# Only with explicit user approval for CI that cannot prompt:
+# appwrite push functions --function-id <FUNCTION_ID> --force
 ```
+
+Never run `appwrite push all --all --force` or `appwrite push tables --all --force` as a default suggestion.
 
 ## Global Command Options
 
@@ -522,7 +522,7 @@ appwrite push topics --all --force
 | `-v, --version` | Output version number |
 | `-V, --verbose` | Show complete error log |
 | `-j, --json` | Output in JSON format |
-| `-f, --force` | Confirm all warnings |
+| `-f, --force` | Skips all warnings — **only if the user explicitly allows it** |
 | `-a, --all` | Select all resources |
 | `--id [id...]` | Pass a list of IDs |
 | `--report` | Generate GitHub error report link |

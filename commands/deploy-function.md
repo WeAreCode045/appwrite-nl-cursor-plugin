@@ -80,17 +80,16 @@ appwrite client \
     --key <API_KEY>
 ```
 
-Then deploy non-interactively:
+Then deploy (prefer targeted; no `--force` unless the user explicitly allows skipping warnings):
 
 ```sh
-# Push all functions
-appwrite push functions --all --force
+# Specific function — let the CLI show warnings
+appwrite push functions --function-id <FUNCTION_ID>
 
-# Push a specific function
-appwrite push functions --function-id <FUNCTION_ID> --force
+# Only with explicit user approval (e.g. CI without prompts):
+# appwrite push functions --function-id <FUNCTION_ID> --force
 
-# Push all resources at once (functions, tables, buckets, teams, topics)
-appwrite push all --all --force
+# Do not suggest: appwrite push all --all --force
 ```
 
 ## Function Management Commands

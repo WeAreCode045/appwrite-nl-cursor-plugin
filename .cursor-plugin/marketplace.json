@@ -7,14 +7,14 @@
   "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin",
   "metadata": {
     "description": "Env-based Appwrite MCP for self-hosted and Cloud — one install, per-project .env, docs + skills included.",
-    "version": "1.2.0"
+    "version": "1.3.0"
   },
   "plugins": [
     {
       "name": "appwrite-nl-cursor-plugin",
       "source": ".",
       "description": "Connect once; MCP follows each project’s .env. Self-hosted ready, plus docs MCP, skills, and rules.",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin"
     }
   ]

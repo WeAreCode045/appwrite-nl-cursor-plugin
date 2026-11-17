@@ -77,14 +77,13 @@ appwrite client \
     --key <API_KEY>
 ```
 
-Then deploy non-interactively:
+Then deploy (prefer targeted; no `--force` unless the user explicitly allows skipping warnings):
 
 ```sh
-# Push all sites
-appwrite push sites --all --force
+appwrite push sites --site-id <SITE_ID>
 
-# Push a specific site
-appwrite push sites --site-id <SITE_ID> --force
+# Only with explicit user approval (e.g. CI without prompts):
+# appwrite push sites --site-id <SITE_ID> --force
 ```
 
 ## Site Management Commands
