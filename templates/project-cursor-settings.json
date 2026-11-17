@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "appwrite-nl-cursor-plugin": {
+      "enabled": true
+    }
+  }
+}

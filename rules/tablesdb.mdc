@@ -1,0 +1,11 @@
+---
+description: Appwrite TablesDB-terminologie en gedeelde types
+alwaysApply: true
+---
+
+# Appwrite TablesDB
+
+- Gebruik uitsluitend moderne TablesDB-terminologie: `TablesDB`, `tables`, `columns`, `rows`, SDK-methoden zoals `listRows` / `createRow` / `updateRow` / `deleteRow`.
+- Gebruik **nooit** de verouderde `collections` / `documents`-terminologie in nieuwe code of docs.
+- Hardcode geen tabelnamen, kolomnamen of enum-waarden op aanname. Gebruik wat in `appwrite.config.json` staat, en — als het project die heeft — gedeelde types in `specs/types.ts` (of het project-equivalent).
+- Project-specifieke agentregels (`AGENTS.md`, `Docs/agents/`, `.cursor/rules/`) gaan bij conflict vóór deze pluginregels.

@@ -9,9 +9,8 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 
 1. Read from the **open workspace** directory, not from global Cursor secrets alone.
 2. Prefer **`.env.local`**, then **`.env`**, walking up from the workspace root toward `$HOME`.
-3. For monorepos (e.g. Research Navigator), also check `sites/navigator-web/.env.local` and `.env` if nothing was found walking up.
-4. **Never invent** a `APPWRITE_PROJECT_ID`. If missing, ask the user to add it.
-5. **Never** put `APPWRITE_API_KEY` in `VITE_*` variables (bundle exposure). Frontend uses only `VITE_APPWRITE_ENDPOINT` and `VITE_APPWRITE_PROJECT_ID`.
+3. **Never invent** a `APPWRITE_PROJECT_ID`. If missing, ask the user to add it.
+4. **Never** put `APPWRITE_API_KEY` in `VITE_*` variables (bundle exposure). Frontend uses only `VITE_APPWRITE_ENDPOINT` and `VITE_APPWRITE_PROJECT_ID`.
 
 ## Variables
 
@@ -21,12 +20,25 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 | Project ID (MCP / CLI) | `APPWRITE_PROJECT_ID`, `APPWRITE_PROJECT`, `VITE_APPWRITE_PROJECT_ID`, … |
 | Server API key (MCP, `appwrite client --key`) | `APPWRITE_API_KEY` only |
 
-## Research Navigator
+## Layout
 
-- Public frontend: `sites/navigator-web/.env` — `VITE_APPWRITE_ENDPOINT`, `VITE_APPWRITE_PROJECT_ID` (see `.env.example`).
-- MCP and deploy automation: repo-root **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`, optional `APPWRITE_ENDPOINT=https://appwrite.nl/v1`.
-- Functions at runtime use Appwrite-injected `APPWRITE_FUNCTION_*` — not the workspace `.env`.
+- MCP / CLI / deploy: workspace **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`, optional `APPWRITE_ENDPOINT=https://appwrite.nl/v1`.
+- Frontend (Vite/etc.): public `VITE_APPWRITE_ENDPOINT` and `VITE_APPWRITE_PROJECT_ID` only — never the API key.
+- Appwrite Functions at runtime use Appwrite-injected `APPWRITE_FUNCTION_*` — not the workspace `.env`.
 
-## MCP in this plugin
+## MCP
 
-The `appwrite-nl` MCP server runs `bin/appwrite-mcp.sh` with `${workspaceFolder}`. It exports `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and `APPWRITE_API_KEY` to `uvx mcp-server-appwrite`.
+| Server | Where | Use for |
+|--------|--------|---------|
+| `appwrite-docs` | Plugin (`.mcp.json` → `https://mcp.appwrite.io/`) | Documentation search. OAuth once in Customize. No workspace `.env`. |
+| `appwrite-nl` | Project `.cursor/mcp.json` | API against the open workspace’s Appwrite project. |
+
+**API MCP is project-scoped** (user-scope stdio MCP sticks credentials across windows):
+
+1. Run command **`install-project-mcp`** (or copy `templates/project-mcp.json` → `.cursor/mcp.json`).
+2. Ensure `~/.local/bin/appwrite-nl-mcp` exists (`bin/link-launcher.sh`).
+3. Reload the window.
+
+The launcher reads `${workspaceFolder}` and exports `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and `APPWRITE_API_KEY` to `uvx mcp-server-appwrite`.
+
+For docs, prefer `appwrite-docs` from this plugin — no separate appwrite.io Cursor plugin required.

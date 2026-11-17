@@ -1,0 +1,11 @@
+---
+description: appwrite.config.json als SSOT en CLI-gebruik
+alwaysApply: true
+---
+
+# Config en CLI
+
+- Een echte Appwrite-app (schema, functions, sites, CI) leeft in `appwrite.config.json`. Init één keer; daarna pull/push. Geen `appwrite client --project-id` op elke projectcommando als de config het project al noemt.
+- Nieuwe of gewijzigde functie, tabel, bucket of kolom: in **dezelfde** wijziging in `appwrite.config.json` én in de code/types die die resource gebruiken.
+- Voor CLI-details: skill `appwrite-cli`. Voor TypeScript SDK: skill `appwrite-typescript`.
+- Stack (React, Tailwind, monorepo, enz.) volgt het **project**, niet deze plugin. Forceer geen UI-kit of CSS-framework.

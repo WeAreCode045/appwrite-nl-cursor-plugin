@@ -1,13 +1,15 @@
 {
   "name": "appwrite-nl-cursor-plugin",
-  "version": "1.0.4",
-  "description": "Trimmed Appwrite plugin for appwrite.nl: MCP + CLI/TypeScript skills. Project ID and API key from the open workspace .env.local / .env, never hardcoded.",
+  "version": "1.1.0",
+  "description": "Appwrite plugin for appwrite.nl: always-on TablesDB/secrets/deploy rules, CLI/TypeScript skills, hosted docs MCP, and project-scoped API MCP. Workspace .env credentials for API; never hardcoded.",
   "author": {
     "name": "Code045",
     "email": "info@code045.nl"
   },
   "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin",
+  "rules": "rules",
   "skills": "skills",
   "commands": "commands",
+  "hooks": "hooks/hooks.json",
   "mcpServers": ".mcp.json"
 }

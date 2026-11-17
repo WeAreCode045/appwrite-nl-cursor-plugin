@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 # Appwrite MCP launcher for https://appwrite.nl
 # Credentials come from the open workspace: walk up from workspaceFolder for .env.local
-# then .env; if missing, check common monorepo paths (e.g. sites/navigator-web).
-# Never invent project IDs; never use global Cursor secrets as the only source.
+# then .env. Never invent project IDs; never use global Cursor secrets as the only source.
 # Stdout is reserved for MCP — diagnostics go to stderr.
 set -u
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 DEFAULT_ENDPOINT="https://appwrite.nl/v1"
 
+ACTIVE_WORKSPACE_FILE="${HOME}/.cursor/appwrite-nl/active-workspace"
+
 start="${1:-}"
 case "$start" in ""|*'${'*|\$*) start="";; esac
-[ -z "$start" ] && start="${CURSOR_WORKSPACE_FOLDER:-${CLAUDE_PROJECT_DIR:-}}"
+[ -z "$start" ] && start="${CURSOR_WORKSPACE_FOLDER:-${CURSOR_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-}}}"
+if [ -z "$start" ] && [ -f "$ACTIVE_WORKSPACE_FILE" ]; then
+  start=$(tr -d '\r\n' < "$ACTIVE_WORKSPACE_FILE" || true)
+fi
 [ -z "$start" ] && start="$PWD"
 [ -d "$start" ] || start="$PWD"
 
@@ -71,17 +75,12 @@ collect_env_candidates() {
   local dir="$1"
   local -a out=()
   while [ "$dir" != "/" ] && [ -n "$dir" ]; do
-  for f in "$dir/.env.local" "$dir/.env"; do
+    for f in "$dir/.env.local" "$dir/.env"; do
       out+=("$f")
     done
     [ "$dir" = "$HOME" ] && break
     dir=$(dirname "$dir")
   done
-  # Monorepo fallbacks (workspace root open, secrets in app subfolder)
-  out+=(
-    "$start/sites/navigator-web/.env.local"
-    "$start/sites/navigator-web/.env"
-  )
   printf '%s\n' "${out[@]}"
 }
 

@@ -1,0 +1,9 @@
+{
+  "hooks": {
+    "workspaceOpen": [
+      {
+        "command": "./bin/on-workspace-open.sh"
+      }
+    ]
+  }
+}

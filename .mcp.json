@@ -1,11 +1,7 @@
 {
   "mcpServers": {
-    "appwrite-nl": {
-      "command": "bash",
-      "args": [
-        "${CURSOR_PLUGIN_ROOT}/bin/appwrite-mcp.sh",
-        "${workspaceFolder}"
-      ]
+    "appwrite-docs": {
+      "url": "https://mcp.appwrite.io/"
     }
   }
 }
