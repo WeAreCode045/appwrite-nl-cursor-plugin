@@ -8,12 +8,13 @@ description: Appwrite CLI skill. Use when managing Appwrite projects from the co
 ## Workspace credentials (verplicht)
 
 - Lees `APPWRITE_PROJECT_ID` en `APPWRITE_API_KEY` uit de **open workspace**: `.env.local`, daarna `.env` (vanaf workspace-root omhoog). Zie skill `appwrite-workspace-env`.
-- Endpoint: `APPWRITE_ENDPOINT` of `VITE_APPWRITE_ENDPOINT`, anders default **`https://appwrite.nl/v1`**. Gebruik geen `cloud.appwrite.io` voor dit project tenzij de gebruiker expliciet een andere host noemt.
+- Endpoint: `APPWRITE_ENDPOINT` of `VITE_APPWRITE_ENDPOINT` uit die env-bestanden; anders de plugin-default (Plugins → Configure). Verzin geen host.
 - Verzin geen project-ID. Zet geen API-keys in `VITE_*`.
 
 ```bash
+# APPWRITE_ENDPOINT must come from workspace .env or plugin Configure default
 appwrite client \
-  --endpoint "${APPWRITE_ENDPOINT:-https://appwrite.nl/v1}" \
+  --endpoint "$APPWRITE_ENDPOINT" \
   --project-id "$APPWRITE_PROJECT_ID" \
   --key "$APPWRITE_API_KEY"
 ```
@@ -73,7 +74,7 @@ All resources are configured in a single `appwrite.config.json` file at the proj
 ```json
 {
     "projectId": "<PROJECT_ID>",
-    "endpoint": "https://appwrite.nl/v1",
+    "endpoint": "<APPWRITE_ENDPOINT>",
     "functions": [],
     "sites": [],
     "tablesDB": [],

@@ -6,15 +6,15 @@
   },
   "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin",
   "metadata": {
-    "description": "Appwrite rules, skills and project-scoped MCP for appwrite.nl; workspace .env credentials.",
-    "version": "1.1.0"
+    "description": "Appwrite rules, skills, docs MCP and project-scoped API MCP; endpoint from .env or Plugins → Configure.",
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "appwrite-nl-cursor-plugin",
       "source": ".",
-      "description": "Appwrite always-on rules + CLI/TypeScript skills for appwrite.nl; hosted docs MCP + per-project API MCP.",
-      "version": "1.1.0",
+      "description": "Appwrite always-on rules + CLI/TypeScript skills; hosted docs MCP + per-project API MCP.",
+      "version": "1.2.0",
       "repository": "https://github.com/WeAreCode045/appwrite-nl-cursor-plugin"
     }
   ]

@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-# Appwrite MCP launcher for https://appwrite.nl
-# Credentials come from the open workspace: walk up from workspaceFolder for .env.local
-# then .env. Never invent project IDs; never use global Cursor secrets as the only source.
+# Appwrite MCP launcher (project API).
+# Credentials from the open workspace .env.local / .env.
+# Endpoint priority: env file → APPWRITE_DEFAULT_ENDPOINT → ~/.cursor/appwrite-nl/default-endpoint
+#   (written by plugin Configure via appwrite-endpoint MCP) → error if still empty.
 # Stdout is reserved for MCP — diagnostics go to stderr.
 set -u
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
-DEFAULT_ENDPOINT="https://appwrite.nl/v1"
-
-ACTIVE_WORKSPACE_FILE="${HOME}/.cursor/appwrite-nl/active-workspace"
+STATE_DIR="${HOME}/.cursor/appwrite-nl"
+ACTIVE_WORKSPACE_FILE="${STATE_DIR}/active-workspace"
+DEFAULT_ENDPOINT_FILE="${STATE_DIR}/default-endpoint"
 
 start="${1:-}"
 case "$start" in ""|*'${'*|\$*) start="";; esac
@@ -34,13 +35,32 @@ read_var() { # $1=file $2=var name → value on stdout
   printf '%s' "$line"
 }
 
+resolve_fallback_endpoint() {
+  local ep=""
+  ep=$(printf '%s' "${APPWRITE_DEFAULT_ENDPOINT:-}" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+  case "$ep" in ""|*'${'*) ep="";; esac
+  if [ -n "$ep" ]; then
+    printf '%s' "$ep"
+    return 0
+  fi
+  if [ -f "$DEFAULT_ENDPOINT_FILE" ]; then
+    ep=$(tr -d '\r\n' < "$DEFAULT_ENDPOINT_FILE" || true)
+    ep=$(printf '%s' "$ep" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')
+    if [ -n "$ep" ]; then
+      printf '%s' "$ep"
+      return 0
+    fi
+  fi
+  return 1
+}
+
 read_endpoint() {
   local f="$1" ep=""
   for v in APPWRITE_ENDPOINT VITE_APPWRITE_ENDPOINT; do
     ep=$(read_var "$f" "$v") && printf '%s' "$ep" && return 0
     ep=""
   done
-  printf '%s' "$DEFAULT_ENDPOINT"
+  resolve_fallback_endpoint
 }
 
 read_project_id() {
@@ -65,7 +85,10 @@ try_env_file() {
     echo "appwrite-mcp: APPWRITE_API_KEY in $f but no project id (APPWRITE_PROJECT_ID or VITE_APPWRITE_PROJECT_ID)" >&2
     return 1
   }
-  endpoint=$(read_endpoint "$f")
+  endpoint=$(read_endpoint "$f") || {
+    echo "appwrite-mcp: no endpoint in $f and no default (set APPWRITE_ENDPOINT in .env, or Plugins → Configure → Default Appwrite endpoint)" >&2
+    return 1
+  }
   echo "appwrite-mcp: project '$pid' on $endpoint (from $f)" >&2
   export APPWRITE_ENDPOINT="$endpoint" APPWRITE_PROJECT_ID="$pid" APPWRITE_API_KEY="$key"
   return 0

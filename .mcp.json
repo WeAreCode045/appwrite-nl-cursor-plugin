@@ -2,6 +2,15 @@
   "mcpServers": {
     "appwrite-docs": {
       "url": "https://mcp.appwrite.io/"
+    },
+    "appwrite-endpoint": {
+      "command": "node",
+      "args": [
+        "${CURSOR_PLUGIN_ROOT}/bin/sync-endpoint-mcp.mjs"
+      ],
+      "env": {
+        "APPWRITE_DEFAULT_ENDPOINT": "${APPWRITE_ENDPOINT}"
+      }
     }
   }
 }

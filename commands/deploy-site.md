@@ -38,7 +38,7 @@ Sites are configured in `appwrite.config.json`:
 ```json
 {
     "projectId": "<PROJECT_ID>",
-    "endpoint": "https://appwrite.nl/v1",
+    "endpoint": "<APPWRITE_ENDPOINT>",
     "sites": [
         {
             "$id": "<SITE_ID>",
@@ -72,7 +72,7 @@ Set up headless mode first:
 
 ```sh
 appwrite client \
-    --endpoint https://appwrite.nl/v1 \
+    --endpoint "$APPWRITE_ENDPOINT" \
     --project-id <PROJECT_ID> \
     --key <API_KEY>
 ```

@@ -8,7 +8,7 @@ description: Appwrite TypeScript SDK skill. Use when building browser-based Java
 ## Workspace credentials
 
 - Client: `VITE_APPWRITE_ENDPOINT` + `VITE_APPWRITE_PROJECT_ID` uit workspace env (geen secrets in `VITE_*`).
-- Server / functions lokaal: `APPWRITE_ENDPOINT` (default `https://appwrite.nl/v1`), `APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY` uit `.env.local` — zie `appwrite-workspace-env`.
+- Server / functions lokaal: `APPWRITE_ENDPOINT` (workspace `.env`, else plugin Configure default), `APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY` uit `.env.local` — zie `appwrite-workspace-env`.
 - Verzin geen project-ID.
 
 ## Installation
@@ -36,7 +36,7 @@ import { Client, Account, TablesDB, Storage, ID, Query } from 'appwrite';
 import { Client, Account, TablesDB, Storage, ID, Query } from 'react-native-appwrite';
 
 const client = new Client()
-    .setEndpoint('https://appwrite.nl/v1')
+    .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
     .setProject('[PROJECT_ID]');
 ```
 
@@ -46,7 +46,7 @@ const client = new Client()
 import { Client, Users, TablesDB, Storage, Functions, ID, Query } from 'node-appwrite';
 
 const client = new Client()
-    .setEndpoint('https://appwrite.nl/v1')
+    .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
     .setProject(process.env.APPWRITE_PROJECT_ID)
     .setKey(process.env.APPWRITE_API_KEY);
 ```
@@ -118,7 +118,7 @@ import { makeRedirectUri } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 
 const client = new Client()
-    .setEndpoint('https://appwrite.nl/v1')
+    .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
     .setProject('[PROJECT_ID]');
 
 const account = new Account(client);
@@ -538,13 +538,13 @@ import { Client, Account, OAuthProvider } from 'node-appwrite';
 
 // Admin client (reusable)
 const adminClient = new Client()
-    .setEndpoint('https://appwrite.nl/v1')
+    .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
     .setProject('[PROJECT_ID]')
     .setKey(process.env.APPWRITE_API_KEY);
 
 // Session client (create per-request)
 const sessionClient = new Client()
-    .setEndpoint('https://appwrite.nl/v1')
+    .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
     .setProject('[PROJECT_ID]');
 
 const session = req.cookies['a_session_[PROJECT_ID]'];
@@ -585,7 +585,7 @@ app.get('/user', async (req, res) => {
 
     // Create a fresh session client per request
     const sessionClient = new Client()
-        .setEndpoint('https://appwrite.nl/v1')
+        .setEndpoint(process.env.APPWRITE_ENDPOINT || process.env.VITE_APPWRITE_ENDPOINT)
         .setProject('[PROJECT_ID]')
         .setSession(session);
 

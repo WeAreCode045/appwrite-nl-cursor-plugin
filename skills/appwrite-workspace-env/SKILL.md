@@ -16,13 +16,13 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 
 | Purpose | Names (first match wins) |
 |---------|--------------------------|
-| API endpoint | `APPWRITE_ENDPOINT`, `VITE_APPWRITE_ENDPOINT` — default `https://appwrite.nl/v1` |
+| API endpoint | `APPWRITE_ENDPOINT`, `VITE_APPWRITE_ENDPOINT` in workspace env. If absent: plugin **Plugins → Configure → Default Appwrite endpoint** (synced to `~/.cursor/appwrite-nl/default-endpoint`). Never invent a host. |
 | Project ID (MCP / CLI) | `APPWRITE_PROJECT_ID`, `APPWRITE_PROJECT`, `VITE_APPWRITE_PROJECT_ID`, … |
 | Server API key (MCP, `appwrite client --key`) | `APPWRITE_API_KEY` only |
 
 ## Layout
 
-- MCP / CLI / deploy: workspace **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`, optional `APPWRITE_ENDPOINT=https://appwrite.nl/v1`.
+- MCP / CLI / deploy: workspace **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`, and ideally `APPWRITE_ENDPOINT`.
 - Frontend (Vite/etc.): public `VITE_APPWRITE_ENDPOINT` and `VITE_APPWRITE_PROJECT_ID` only — never the API key.
 - Appwrite Functions at runtime use Appwrite-injected `APPWRITE_FUNCTION_*` — not the workspace `.env`.
 
@@ -30,7 +30,8 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 
 | Server | Where | Use for |
 |--------|--------|---------|
-| `appwrite-docs` | Plugin (`.mcp.json` → `https://mcp.appwrite.io/`) | Documentation search. OAuth once in Customize. No workspace `.env`. |
+| `appwrite-docs` | Plugin (`.mcp.json` → `https://mcp.appwrite.io/`) | Documentation search. OAuth once in Customize. |
+| `appwrite-endpoint` | Plugin | Persists Configure default endpoint for the API launcher. |
 | `appwrite-nl` | Project `.cursor/mcp.json` | API against the open workspace’s Appwrite project. |
 
 **API MCP is project-scoped** (user-scope stdio MCP sticks credentials across windows):
@@ -39,6 +40,4 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 2. Ensure `~/.local/bin/appwrite-nl-mcp` exists (`bin/link-launcher.sh`).
 3. Reload the window.
 
-The launcher reads `${workspaceFolder}` and exports `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, and `APPWRITE_API_KEY` to `uvx mcp-server-appwrite`.
-
-For docs, prefer `appwrite-docs` from this plugin — no separate appwrite.io Cursor plugin required.
+Endpoint resolution in the launcher: workspace env → Configure default → error if still missing.
