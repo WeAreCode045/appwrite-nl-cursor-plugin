@@ -2,3 +2,7 @@
 .env.*
 !.env.example
 .DS_Store
+
+# Internal maintainer docs (not for GitHub visitors)
+_internal/
+docs/

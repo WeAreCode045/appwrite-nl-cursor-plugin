@@ -22,22 +22,18 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 
 ## Layout
 
-- MCP / CLI / deploy: workspace **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`, and ideally `APPWRITE_ENDPOINT`.
+- MCP / CLI / deploy: workspace **`.env.local`** with `APPWRITE_API_KEY`, `APPWRITE_PROJECT_ID`. Endpoint optional if Configure default is set.
 - Frontend (Vite/etc.): public `VITE_APPWRITE_ENDPOINT` and `VITE_APPWRITE_PROJECT_ID` only — never the API key.
 - Appwrite Functions at runtime use Appwrite-injected `APPWRITE_FUNCTION_*` — not the workspace `.env`.
 
-## MCP
+## MCP (from this plugin)
 
-| Server | Where | Use for |
-|--------|--------|---------|
-| `appwrite-docs` | Plugin (`.mcp.json` → `https://mcp.appwrite.io/`) | Documentation search. OAuth once in Customize. |
-| `appwrite-endpoint` | Plugin | Persists Configure default endpoint for the API launcher. |
-| `appwrite-nl` | Project `.cursor/mcp.json` | API against the open workspace’s Appwrite project. |
+| Server | Role |
+|--------|------|
+| `appwrite-api` | API against the open workspace’s Appwrite project (env-based). No per-project `.cursor/mcp.json` needed. |
+| `appwrite-docs` | Documentation search (`https://mcp.appwrite.io/`). OAuth once. |
+| `appwrite-endpoint` | Persists Configure default endpoint for the API launcher. |
 
-**API MCP is project-scoped** (user-scope stdio MCP sticks credentials across windows):
+Endpoint resolution: workspace env → Configure default → error if still missing.
 
-1. Run command **`install-project-mcp`** (or copy `templates/project-mcp.json` → `.cursor/mcp.json`).
-2. Ensure `~/.local/bin/appwrite-nl-mcp` exists (`bin/link-launcher.sh`).
-3. Reload the window.
-
-Endpoint resolution in the launcher: workspace env → Configure default → error if still missing.
+If the user asks to “add MCP to this project”, tell them the plugin already provides it; only `.env.local` credentials are required.

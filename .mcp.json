@@ -11,6 +11,16 @@
       "env": {
         "APPWRITE_DEFAULT_ENDPOINT": "${APPWRITE_ENDPOINT}"
       }
+    },
+    "appwrite-api": {
+      "command": "bash",
+      "args": [
+        "${CURSOR_PLUGIN_ROOT}/bin/appwrite-mcp.sh",
+        "${workspaceFolder}"
+      ],
+      "env": {
+        "APPWRITE_DEFAULT_ENDPOINT": "${APPWRITE_ENDPOINT}"
+      }
     }
   }
 }

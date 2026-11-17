@@ -1,7 +1,7 @@
 {
   "name": "appwrite-nl-cursor-plugin",
   "version": "1.2.0",
-  "description": "Appwrite Cursor plugin: rules, CLI/TypeScript skills, hosted docs MCP, project-scoped API MCP. Endpoint from workspace .env, else Plugins → Configure.",
+  "description": "Env-based Appwrite MCP for self-hosted (and Cloud): connect once, every project picks up endpoint and keys from .env — plus docs MCP, skills, and rules.",
   "author": {
     "name": "Code045",
     "email": "info@code045.nl"
@@ -18,8 +18,8 @@
       "APPWRITE_ENDPOINT": {
         "type": "string",
         "title": "Default Appwrite endpoint",
-        "description": "Global fallback when the workspace .env has no APPWRITE_ENDPOINT / VITE_APPWRITE_ENDPOINT. Examples: https://cloud.appwrite.io/v1 or https://your-host/v1. Workspace .env always wins.",
-        "default": "https://appwrite.nl/v1"
+        "description": "Global fallback when the workspace .env has no APPWRITE_ENDPOINT / VITE_APPWRITE_ENDPOINT. Example: https://cloud.appwrite.io/v1 or https://your-host/v1. Workspace .env always wins.",
+        "default": "https://cloud.appwrite.io/v1"
       }
     }
   }

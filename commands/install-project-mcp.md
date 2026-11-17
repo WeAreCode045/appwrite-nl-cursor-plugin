@@ -1,56 +1,24 @@
 ---
 name: install-project-mcp
-description: Wire Appwrite NL MCP into the current project via .cursor/mcp.json (per-workspace credentials)
+description: Confirm Appwrite API MCP from the plugin (no per-project mcp.json needed)
 ---
 
-# Install project-scoped Appwrite NL MCP
+# Appwrite API MCP
 
-Cursor user-scope plugin MCP is a **single shared process** across windows. Credentials from workspace `.env` stick until the plugin is toggled. Skills/commands stay in the user plugin; **MCP must be project-scoped**.
+This plugin already registers **`appwrite-api`** in its own `.mcp.json`. Do **not** add a duplicate Appwrite MCP entry to the project `.cursor/mcp.json`.
 
-## Do this in the open workspace
+## Checklist for the open workspace
 
-1. Ensure the stable launcher exists:
+1. Plugin **appwrite-nl-cursor-plugin** is installed and enabled.
+2. **Plugins → Configure → Default Appwrite endpoint** is set (unless every project sets `APPWRITE_ENDPOINT` in `.env`).
+3. Workspace `.env.local` (or `.env`) has at least:
 
-```sh
-PLUGIN_BIN=$(ls -1d "$HOME/.cursor/plugins/cache/wearecode045-appwrite-nl-cursor-plugin/appwrite-nl-cursor-plugin"/*/bin 2>/dev/null | head -1)
-if [ -z "$PLUGIN_BIN" ] && [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
-  PLUGIN_BIN="${CURSOR_PLUGIN_ROOT}/bin"
-fi
-if [ -n "$PLUGIN_BIN" ] && [ -x "$PLUGIN_BIN/link-launcher.sh" ]; then
-  bash "$PLUGIN_BIN/link-launcher.sh"
-elif [ -x "$HOME/Code045/appwrite-nl-cursor-plugin/bin/link-launcher.sh" ]; then
-  bash "$HOME/Code045/appwrite-nl-cursor-plugin/bin/link-launcher.sh"
-else
-  echo "link-launcher.sh not found; install/update the appwrite-nl-cursor-plugin first" >&2
-  exit 1
-fi
-test -x "$HOME/.local/bin/appwrite-nl-mcp"
+```env
+APPWRITE_PROJECT_ID=...
+APPWRITE_API_KEY=...
 ```
 
-2. Create or merge `.cursor/mcp.json` in the **workspace root** so it contains:
+4. Customize → MCP: **`appwrite-api`** is on. If it failed earlier, toggle it or **Developer: Reload Window**.
+5. Do not keep an old project-level `appwrite-nl` server next to the plugin server (disable/remove the duplicate).
 
-```json
-{
-  "mcpServers": {
-    "appwrite-nl": {
-      "command": "bash",
-      "args": [
-        "${userHome}/.local/bin/appwrite-nl-mcp",
-        "${workspaceFolder}"
-      ]
-    }
-  }
-}
-```
-
-Preserve any other existing `mcpServers` entries. Do not nest this under the plugin; it must live in the project.
-
-3. Confirm workspace `.env.local` (preferred) or `.env` has `APPWRITE_API_KEY` and `APPWRITE_PROJECT_ID` (or `VITE_APPWRITE_PROJECT_ID`).
-
-4. If Customize still shows a **plugin** MCP named like `appwrite-nl` / `plugin-…-appwrite-nl`, disable that duplicate. Only the project `.cursor/mcp.json` server should run.
-
-5. Ask the user to run **Developer: Reload Window**, then verify MCP `appwrite-nl` connects in Customize / Tools & MCP.
-
-## Why
-
-`${workspaceFolder}` in project `.cursor/mcp.json` resolves to this project. Each project gets its own MCP config string and credentials. User-scope plugin MCP cannot do that.
+Credentials always come from the open workspace env; the global Configure value is only the endpoint fallback.

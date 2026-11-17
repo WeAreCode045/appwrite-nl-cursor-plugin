@@ -1,6 +1,7 @@
 {
+  "_comment": "Optional legacy fallback only. Prefer the plugin MCP server appwrite-api — do not duplicate unless the plugin MCP is disabled.",
   "mcpServers": {
-    "appwrite-nl": {
+    "appwrite-api": {
       "command": "bash",
       "args": [
         "${userHome}/.local/bin/appwrite-nl-mcp",
