@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Appwrite MCP launcher (project API).
 # Credentials from the open workspace .env.local / .env.
-# Endpoint priority: env file → APPWRITE_DEFAULT_ENDPOINT → ~/.cursor/appwrite-nl/default-endpoint
-#   (written by plugin Configure via appwrite-endpoint MCP) → error if still empty.
+# Endpoint priority: env file → APPWRITE_DEFAULT_ENDPOINT (plugin Configure via mcp env)
+#   → ~/.cursor/appwrite-nl/default-endpoint → error if still empty.
 # Stdout is reserved for MCP — diagnostics go to stderr.
 set -u
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"

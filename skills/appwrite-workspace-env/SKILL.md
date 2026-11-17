@@ -30,10 +30,9 @@ description: Resolve Appwrite endpoint, project ID, and API key from the Cursor 
 
 | Server | Role |
 |--------|------|
-| `appwrite-api` | API against the open workspace’s Appwrite project (env-based). No per-project `.cursor/mcp.json` needed. |
+| `appwrite-api` | API against the open workspace’s Appwrite project (env-based). Configure endpoint is passed as `APPWRITE_DEFAULT_ENDPOINT`. |
 | `appwrite-docs` | Documentation search (`https://mcp.appwrite.io/`). OAuth once. |
-| `appwrite-endpoint` | Persists Configure default endpoint for the API launcher. |
 
-Endpoint resolution: workspace env → Configure default → error if still missing.
+Endpoint resolution: workspace env → plugin Configure (`APPWRITE_DEFAULT_ENDPOINT`) → error if still missing.
 
 If the user asks to “add MCP to this project”, tell them the plugin already provides it; only `.env.local` credentials are required.
