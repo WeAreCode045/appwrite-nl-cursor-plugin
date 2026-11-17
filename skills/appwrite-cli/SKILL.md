@@ -5,11 +5,11 @@ description: Appwrite CLI skill. Use when managing Appwrite projects from the co
 
 # Appwrite CLI
 
-## Workspace credentials (verplicht)
+## Workspace credentials (required)
 
-- Lees `APPWRITE_PROJECT_ID` en `APPWRITE_API_KEY` uit de **open workspace**: `.env.local`, daarna `.env` (vanaf workspace-root omhoog). Zie skill `appwrite-workspace-env`.
-- Endpoint: `APPWRITE_ENDPOINT` of `VITE_APPWRITE_ENDPOINT` uit die env-bestanden; anders de plugin-default (Plugins → Configure). Verzin geen host.
-- Verzin geen project-ID. Zet geen API-keys in `VITE_*`.
+- Read `APPWRITE_PROJECT_ID` and `APPWRITE_API_KEY` from the **open workspace**: `.env.local`, then `.env` (walk up from the workspace root). See skill `appwrite-workspace-env`.
+- Endpoint: `APPWRITE_ENDPOINT` or `VITE_APPWRITE_ENDPOINT` from those env files; otherwise the plugin default (Plugins → Configure). Never invent a host.
+- Never invent a project ID. Do not put API keys in `VITE_*`.
 
 ```bash
 # APPWRITE_ENDPOINT must come from workspace .env or plugin Configure default

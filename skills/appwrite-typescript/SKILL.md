@@ -7,9 +7,9 @@ description: Appwrite TypeScript SDK skill. Use when building browser-based Java
 
 ## Workspace credentials
 
-- Client: `VITE_APPWRITE_ENDPOINT` + `VITE_APPWRITE_PROJECT_ID` uit workspace env (geen secrets in `VITE_*`).
-- Server / functions lokaal: `APPWRITE_ENDPOINT` (workspace `.env`, else plugin Configure default), `APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY` uit `.env.local` — zie `appwrite-workspace-env`.
-- Verzin geen project-ID.
+- Client: `VITE_APPWRITE_ENDPOINT` + `VITE_APPWRITE_PROJECT_ID` from workspace env (no secrets in `VITE_*`).
+- Server / local functions: `APPWRITE_ENDPOINT` (workspace `.env`, else plugin Configure default), `APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY` from `.env.local` — see `appwrite-workspace-env`.
+- Never invent a project ID.
 
 ## Installation
 

@@ -1,11 +1,11 @@
 ---
-description: Appwrite TablesDB-terminologie en gedeelde types
+description: Appwrite TablesDB terminology and shared types
 alwaysApply: true
 ---
 
 # Appwrite TablesDB
 
-- Gebruik uitsluitend moderne TablesDB-terminologie: `TablesDB`, `tables`, `columns`, `rows`, SDK-methoden zoals `listRows` / `createRow` / `updateRow` / `deleteRow`.
-- Gebruik **nooit** de verouderde `collections` / `documents`-terminologie in nieuwe code of docs.
-- Hardcode geen tabelnamen, kolomnamen of enum-waarden op aanname. Gebruik wat in `appwrite.config.json` staat, en — als het project die heeft — gedeelde types in `specs/types.ts` (of het project-equivalent).
-- Project-specifieke agentregels (`AGENTS.md`, `Docs/agents/`, `.cursor/rules/`) gaan bij conflict vóór deze pluginregels.
+- Use modern TablesDB terminology only: `TablesDB`, `tables`, `columns`, `rows`, and SDK methods such as `listRows` / `createRow` / `updateRow` / `deleteRow`.
+- Never use legacy `collections` / `documents` terminology in new code or docs.
+- Do not hardcode table names, column names, or enum values from assumptions. Use what is in `appwrite.config.json`, and — if the project has them — shared types in `specs/types.ts` (or the project equivalent).
+- Project-specific agent rules (`AGENTS.md`, `Docs/agents/`, `.cursor/rules/`) take precedence over these plugin rules on conflict.

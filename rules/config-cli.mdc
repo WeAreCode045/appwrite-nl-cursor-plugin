@@ -1,11 +1,12 @@
 ---
-description: appwrite.config.json als SSOT en CLI-gebruik
+description: appwrite.config.json as SSOT and CLI usage
 alwaysApply: true
 ---
 
-# Config en CLI
+# Config and CLI
 
-- Een echte Appwrite-app (schema, functions, sites, CI) leeft in `appwrite.config.json`. Init één keer; daarna pull/push. Geen `appwrite client --project-id` op elke projectcommando als de config het project al noemt.
-- Nieuwe of gewijzigde functie, tabel, bucket of kolom: in **dezelfde** wijziging in `appwrite.config.json` én in de code/types die die resource gebruiken.
-- Voor CLI-details: skill `appwrite-cli`. Voor TypeScript SDK: skill `appwrite-typescript`.
-- Stack (React, Tailwind, monorepo, enz.) volgt het **project**, niet deze plugin. Forceer geen UI-kit of CSS-framework.
+- A real Appwrite app (schema, functions, sites, CI) lives in `appwrite.config.json`. Init once; then pull/push. Do not pass `appwrite client --project-id` on every project command when the config already names the project.
+- Keep `appwrite.config.json` in sync automatically whenever work needs new or changed Appwrite resources: functions, tables, columns, buckets, permissions, teams, topics, sites, and related settings. Update the config in the **same** change as the code/types that use those resources so the project is immediately pushable with the CLI (`appwrite push …`) when the user asks to deploy.
+- Do not leave schema or resource changes only in code or only in the Console — the config file is the source of truth for what can be pushed.
+- For CLI details: skill `appwrite-cli`. For the TypeScript SDK: skill `appwrite-typescript`.
+- Stack choices (React, Tailwind, monorepo, etc.) follow the **project**, not this plugin. Do not force a UI kit or CSS framework.
